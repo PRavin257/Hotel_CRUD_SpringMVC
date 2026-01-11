@@ -104,9 +104,3 @@ Hotel_CRUD_SpringMVC
 * Backend development best practices
 
 ---
-
-## 👨‍💻 Author
-
-**Pravinkumar Choudhary**
-Master’s in Information Technology
-GitHub: [https://github.com/Pravin257](https://github.com/Pravin257)
