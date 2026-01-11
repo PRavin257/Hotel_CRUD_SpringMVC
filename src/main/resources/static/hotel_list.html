@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management - Home</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #f4f4f4;
+        }
+
+        a.btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        a.btn:hover {
+            background: #0056b3;
+        }
+
+        a.edit-btn {
+            background: #ffc107;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        a.edit-btn:hover {
+            background: #e0a800;
+        }
+
+        a.delete-btn {
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        a.delete-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Hotel List</h1>
+
+    <a href="add_hotel.html" class="btn">Add New Hotel</a>
+
+    <table id="hotel-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Rating</th>
+                <th>Type</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dynamic rows -->
+        </tbody>
+    </table>
+
+    <script>
+        const API_URL = '/hotel';
+        const tableBody = document.querySelector('#hotel-table tbody');
+
+        async function fetchHotels() {
+            try {
+                const response = await fetch(API_URL);
+                const hotels = await response.json();
+
+                tableBody.innerHTML = '';
+
+                hotels.forEach(hotel => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${hotel.id}</td>
+                        <td>${hotel.name}</td>
+                        <td>${hotel.rating}</td>
+                        <td>${hotel.type}</td>
+                        <td>${hotel.address}</td>
+                        <td>
+                            <a href="edit_hotel.html?id=${hotel.id}" class="edit-btn">Edit</a>
+                            <a href="delete_hotel.html?id=${hotel.id}" class="delete-btn">Delete</a>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error fetching hotels:', error);
+                tableBody.innerHTML =
+                    '<tr><td colspan="6">Error loading hotel data</td></tr>';
+            }
+        }
+
+        fetchHotels();
+    </script>
+
+</body>
+</html>
